@@ -11,8 +11,11 @@ int main(int argc, char *argv[]) {
     }
     int year = atoi(argv[1]);
     bool wasLeapYear = isLeapYear(year);
-    if (wasLeapYear)
+    if (wasLeapYear) {
         printf("%d is a leap year.\n", year);
-    else
+        return EXIT_SUCCESS;
+    } else {
         printf("%d is not a leap year.\n", year);
+        return EXIT_FAILURE;
+    }
 }

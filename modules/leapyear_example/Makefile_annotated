@@ -1,0 +1,19 @@
+.PHONY: all # all is not a file target, do not check the timestamp of all.
+all: test isLeapYear # to `make all`, make test and make isLeapyear
+
+.PHONY: test # test is not a file target
+test: testRunner # to `make test`, make testRunner
+	./testRunner # execute testRunner
+
+# to make testRunner, make testRunner.o, isLeapYearTest.o, and isLeapYear_impl.o
+# Also: triggers implicit rule for linking
+testRunner: testRunner.o isLeapYearTest.o isLeapYear_impl.o
+
+# to make isLeapYear, make isLeapYear.o and isLeapYear_impl.o
+# Also: triggers implicit rule for linking
+isLeapYear: isLeapYear.o isLeapYear_impl.o
+
+.PHONY: clean # clean is not a file target
+clean:: # Two colons: Allows for multiple clean:: targets in the same build
+# $(RM): Built-in variable for the delete command - rm on Unix and del on VMS/Windows
+	$(RM) *.[adios] testRunner isLeapYear # delete files *.a *.d *.i *.o *.s testRunner and isLeapYear
