@@ -9,6 +9,7 @@
 ## Levels of modules
 
 Construction-level modularization
+- Macros
 - Source modules (`*.c` / `*.cpp`)
 - Header files (`*.h`)
   provide reuse through the preprocessor
@@ -21,21 +22,27 @@ Deployment-level modularization
 - Dynamic link libraries (`*.so`, `*.dll`)
 
 Phrasing modularization
+- Namespaces
 - Classes
 - Functions
 - Templates
 - Macros
 - Global Variables (avoid!)
 
+
 Plus something that automates your process!
 
 ## Philosophy
 - Divide and Conquer
+- Expand and Restructure
 - Modularization is the physical mechanisms
+- Modularization goes in hand with Abstraction
+  - Modularization to provide granularity of change and cohesion
+  - Abstraction to counter coupling with decoupling
 - Software design is the rationale and reasoning of decisions about modularization
 - Elementary particles of modularization: individual instructions of the Turing machine or individual terms of the Lambda calculus -> statements and expressions, can only be reused through copy-paste (or goto)
 - Atoms and molecules of modularization: functions and classes, can be reused through name
-- Colocation of cohesion into a named element
+- Modularization means (among other things) Colocation of cohesion into a named element
 - Names are crucial for reuse
   - Name categories: technical domain and business domain
   - Names need to communicate intent
@@ -62,6 +69,8 @@ Plus something that automates your process!
 - Duplication: Duplication is more than "looks similar".
   Real duplication is cohesion: "changes for the same reasons".
 - Software design is about giving maintainable structure to behavior.
+- "The Secondary Value of Software is its behavior, that it does what the current users currently need without any bugs, crashes, or delays." ― Robert C. Martin
+- "The Primary Value of Software is softness of its structure, that it tolerates and facilitates the ongoing need for change for new behavior."
 - Users care about behavior.
 - Structure is for us, developers, to enable us to deliver behavior with less risk, less effort, and higher confidence.
 - Coupling: A dependency that propagates change.
@@ -71,11 +80,13 @@ Plus something that automates your process!
   - Inseparability: Code is not reusable, caused by coupling and lack of cohesion
   - Opacity: Code is difficult to understand
   - Viscosity: It is slow and difficult to get feedback on code (and change)
-  ⇒ Caused by coupling and lack of (colocation for) cohesion
+  ⇒ Caused by coupling (without countering decoupling) and lack of (colocation for) cohesion
 - Abstraction and Modularization
   - To decouple and colocate
   - Decouple: Prevent (negative effects like effort and risk of) change propagation through abstraction
   - Colocate: Reduce effort and risk of change by reducing motion across structure when performing change on cohesive elements through modularization by responsibility
+- DIP - Dependency Inversion Principle: Invert key dependencies using abstractions to create reusable modules
+- Software verification mechanisms trade fragility into rigidity. That can be type checks, or tests, or something else.
 
 - A fundamental question: Does it scale?
   What if the volume increases? What if we have more of this?
@@ -109,3 +120,9 @@ map<item,int> shoppingCartContent; // good, does communicate intent
 #endif
 ```
 - Header files should be self-contained. If a declaration in a header file needs another header file, it is the responsibility of this header file to include the other header file.
+
+
+## Process
+- Simplest: C/C++-file (`*.c` or `*.cpp`) [compiler+linker]⇒ binary executable
+- Multiple sources: C/C++-files (`*.c` or `*.cpp`) [compiler]⇒ object files (`*.o` or `*.obj`) [linker]⇒ binary executable
+- C/C++-files (`*.c` or `*.cpp`) [compiler]⇒ object files (`*.o` or `*.obj`) [archiver/librarian]⇒ archive/static link library (`*.a` or `*.lib`)
