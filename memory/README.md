@@ -65,3 +65,35 @@ How is NULL defined?
 Assume the software is the firmware of a pacemaker. Are memory leaks ok?
 Imagine the autopsy report: "Heart stopped because malloc() returned NULL."
 In software where memory can be life-critical, dynamic memory allocation might even be "forbidden".
+
+## Structs
+- The compiler may insert padding bytes into structures between fields and at the end to ensure that access to data is optimal for the CPU.
+  That is what we call "aligned" access.
+  For example, most CPUs will operate under optimal memory access conditions if a 32-bit value is aligned to a 32-bit address (an address that is divisible by 4).
+- Our primary concern for structs should first be to ensure that the struct is easy to understand.
+  Fields should be sorted by criteria like natural order and cohesion.
+- However, in special situations, the memory consumption can matter.
+  - Memory consumption matters on tiny devices like RFID tags or smart cards
+  - Memory consumption may occasionally matter in an OS kernel
+  - Memory consumption may matter for data processed frequently in large amounts
+  There, optimizing structures for size by ordering fields in the descending order of their sizes will reduce memory consumption.
+  Reducing memory consumption can increase speed because more data will fit in the CPU cache.
+- "Premature Optimization is the root of all evil." Tony Hoare and Donald Knuth
+  ⇒ Don't optimize until you have:
+  - evidence that optimization is necessary
+  - evidence that optimization is useful (effective)
+  ⇒ Don't optimize without profiling.
+- use `__attribute__((packed))` to declare for a struct that its fields should be stored without padding.
+  We call a such a struct a "packed struct".
+  Warning:
+  - packed structs are slow.
+  - On some CPUs (like older ARM and many RISC CPUs) packed structs require much more code.
+
+## How to find more problems before they happen?
+- Enable all compiler warnings, for example, use `-W -Wall -pedantic` with GCC or Clang.
+- Use an open source lint tool like `splint`.
+- Use a paid tool like _PC-Lint_.
+- Use tests - unit tests, integration tests, system tests, etc.
+- Use _valgrind_ or a similar tool to find memory leaks.
+
+Remember: Defect prevention is better than defect detection!

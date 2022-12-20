@@ -39,7 +39,7 @@ Plus something that automates your process!
 - Modularization goes in hand with Abstraction
   - Modularization to provide granularity of change and cohesion
   - Abstraction to counter coupling with decoupling
-- Software design is the rationale and reasoning of decisions about modularization
+- Software design is the rationale and reasoning of decisions about modularization and abstraction
 - Elementary particles of modularization: individual instructions of the Turing machine or individual terms of the Lambda calculus -> statements and expressions, can only be reused through copy-paste (or goto)
 - Atoms and molecules of modularization: functions and classes, can be reused through name
 - Modularization means (among other things) Colocation of cohesion into a named element
@@ -47,6 +47,7 @@ Plus something that automates your process!
   - Name categories: technical domain and business domain
   - Names need to communicate intent
   - Intent often is the glue and transition between technical domain and business domain
+    `list<item> shoppingCart;`
 - Cohesion is the nature of things to change together
   - We call things "cohesive" when it is natural for them to change together
 - Unix philosophy: "Everything should do one thing, it should do it well, and it should do it only."
