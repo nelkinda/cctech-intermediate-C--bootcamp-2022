@@ -4,7 +4,7 @@ What are regular expressions?
 They are simple grammars for strings.
 Isn't this cool!
 
-## Example
+## Examples
 "What's your idea of a perfect date?"
 "YYYY-MM-dd, everything else would be just confusing."
 2022-12-26: Valid date in ISO-8601 / RFC 3339
@@ -20,6 +20,8 @@ Similar regular expression for date: `"\d+(-\d{2}){2}"`
 `^#`: Hash symbol at the start of the line.
 `^[^#]`: First symbol at the start of the line, when that symbol is not a hash symbol.
 `^(?![#]|(  )*[-]).*[^.?!:]$`: Lines/strings that do not start with `#` and do not end with full stop or question mark.
+
+`M[ae][ijy]e?r` The German name "Meier" in all its possible spellings.
 
 ## Components
 - Atom: `a` matches the lowercase character `a`
@@ -40,7 +42,7 @@ Similar regular expression for date: `"\d+(-\d{2}){2}"`
   - `\d`: Shorthand for digits, same as `[0-9]`
 - Escape: Toggle the special meaning of a symbol. `\.` matches `.`.
 - Group: `()` Groups a regular expression so that it can be used like an atom, plus it can be backreferenced.
-- Group modifier: (?!a) matches not a.
+- Group modifier: (?!a) matches not a (in this case like `[^a]` but could be used for bigger things than atoms).
 - Alternative: `(a|b)` matches a or b
 - Anchor: Matches zero characters but a specified position
   - `^`: Start of line or string
@@ -70,3 +72,35 @@ Use Case examples:
 - sed (replacing strings in files)
 - text editors (every powerful text editor supports find and replace with regular expressions)
 - in programming for data validation and data parsing
+
+## Exercise
+- Write a program `isValidTime` that checks whether a given string is a valid time according to ISO 8601 / RFC 3339.
+  The time could be 12:10:30 (including seconds) or 12:10 (without seconds).
+
+## DISCLAIMER
+- Time and date are nice examples for learning regular expressions.
+  BUT: Time and date should never be checked for validity with regular expressions.
+- Also, do not use regular expressions to check email addresses for validity (unless you have read the RFCs for email addresses and believe you can adhere to their specification - and if you're unsure about the answer, the answer is no).
+
+## Homework / Assignment
+- Write a program that uses a regular expression for validating an ISO 8601 date, time, or datetime string.
+  - deal with leap seconds.
+  - make the seconds optional.
+  - if seconds are specified, make milliseconds, microseconds, and nanoseconds optional.
+  - Allow for an optional time zone specifier, either as offset `+05:30` or as `Z` to denote UTC.
+The following are examples for valid strings:
+- `2022-12-26T06:55:30.741374147`
+- `2022-12-26T06:55:30.741374147Z`
+- `2022-12-26T12:25:30.741374147+05:30`
+- `2022-12-26T06:55:30.741374`
+- `2022-12-26T06:55:30.741374Z`
+- `2022-12-26T12:25:30.741374+05:30`
+- `2022-12-26T06:55:30.741`
+- `2022-12-26T06:55:30.741Z`
+- `2022-12-26T12:25:30.741+05:30`
+- `2022-12-26T06:55:30`
+- `2022-12-26T06:55:30Z`
+- `2022-12-26T12:25+05:30`
+- `2022-12-26T06:55`
+- `2022-12-26T06:55Z`
+- `2022-12-26T12:25:30+05:30`
