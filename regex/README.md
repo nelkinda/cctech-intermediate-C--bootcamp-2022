@@ -40,8 +40,10 @@ Similar regular expression for date: `"\d+(-\d{2}){2}"`
   - `[a-k]`: Range of characters
   - `[^a-k]`: Negated range, matches all except `a-k`
   - `\d`: Shorthand for digits, same as `[0-9]`
+  - `\w`: Shorthand for word characters, usually the same as `[a-zA-Z0-9]`
 - Escape: Toggle the special meaning of a symbol. `\.` matches `.`.
-- Group: `()` Groups a regular expression so that it can be used like an atom, plus it can be backreferenced.
+- Group: `(X)` Groups a regular expression so that it can be used like an atom, plus it can be backreferenced.
+- Group without number: `(?:X)` Groups a regular expression so that it can be used like an atom, but without number, so no backreference possible.
 - Group modifier: (?!a) matches not a (in this case like `[^a]` but could be used for bigger things than atoms).
 - Alternative: `(a|b)` matches a or b
 - Anchor: Matches zero characters but a specified position
@@ -50,6 +52,7 @@ Similar regular expression for date: `"\d+(-\d{2}){2}"`
   - `\<`: Start of word
   - `\>`: End of word
   - `\b`: Word boundary
+- Backreference: `\\n` with n being a number of a previous group matches that previous group again.
 
 ## Flavors
 There are different implementations of regular expressions.
