@@ -1,0 +1,1 @@
+CXXFLAGS:=-W -Wall -pedantic
