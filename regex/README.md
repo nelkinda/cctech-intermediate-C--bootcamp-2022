@@ -42,8 +42,8 @@ Similar regular expression for date: `"\d+(-\d{2}){2}"`
   - `\d`: Shorthand for digits, same as `[0-9]`
   - `\w`: Shorthand for word characters, usually the same as `[a-zA-Z0-9]`
 - Escape: Toggle the special meaning of a symbol. `\.` matches `.`.
-- Group: `(X)` Groups a regular expression so that it can be used like an atom, plus it can be backreferenced.
-- Group without number: `(?:X)` Groups a regular expression so that it can be used like an atom, but without number, so no backreference possible.
+- Capturing Group: `(X)` Groups a regular expression so that it can be used like an atom, plus it can be backreferenced.
+- Non-Capturing Group: `(?:X)` Groups a regular expression so that it can be used like an atom, but without number, so no backreference possible.
 - Group modifier: (?!a) matches not a (in this case like `[^a]` but could be used for bigger things than atoms).
 - Alternative: `(a|b)` matches a or b
 - Anchor: Matches zero characters but a specified position
@@ -66,15 +66,54 @@ Examples:
 - Perl regular expressions
 - Java regular expressions (based on Perl)
 
+## Greedy vs Reluctant vs Possessive quantifiers
+- greedy: The quantifier will match as much as possible, but be rematched with less if neccessary to succeed.
+  Matching of the quantifier happens "right to left".
+- reluctant: The quantifier will match as little as possible, and be rematched with more if neccessary to succeed.
+  Matching of the quantifier happens "left to right".
+- possessive: The quantifier will match as much as possible, and not rematch.
+  Matching of the quantifier happens "right".
+
+By default, quantifiers are greedy.
+To turn a greedy quantifier into a reluctant quantfier, append `?`.
+To turn a greedy quantifier into a possessive quantifier, append `+`.
+
+Note: Not all regex engines support this.
+
+Regex: `a*b`
+String: `b` -> matches, `ab` -> matches, `aaaaaaaaaaab` -> matches, `bb` -> doesn't match
+
+Regex: `(a*)(b)`
+String: `b` -> matches, match[1] == "", match[2] == "b"
+String: `aaaab` -> matches, match[1] == "aaaa", match[2] == "b"
+
+Regex: `(a*)(.)`
+String: `c` -> matches, match[1] == "", match[2] == "c"
+String: `aaaac` -> matches, match[1] == "aaaa", match[2] == "c"
+String: `aaaaa` -> matches, match[1] == "aaaa", match[2] == "a"
+
+Regex: `(.*)(.*)`
+String: `` -> matches, match[1] == "", match[2] == ""
+String: `a` -> matches, match[1] == "a", match[2] == ""
+String: `aa` -> matches, match[1] == "aa", match[2] == ""
+String: `abc` -> matches, match[1] == "abc", match[2] == ""
+
+Regex: `(.*?)(.*)`
+String: `` -> matches, match[1] == "", match[2] == ""
+String: `a` -> matches, match[1] == "", match[2] == "a"
+String: `aa` -> matches, match[1] == "", match[2] == "aa"
+String: `abc` -> matches, match[1] == "", match[2] == "abc"
+
 ## Use Cases
 - Finding string (find/matching)
 - Replacing strings (replace)
 
 Use Case examples:
-- grep (finding strings in files)
-- sed (replacing strings in files)
+- `grep` (finding strings in files)
+- `sed` (replacing strings in files)
 - text editors (every powerful text editor supports find and replace with regular expressions)
 - in programming for data validation and data parsing
+- Available in many programming languages, for example Perl, JavaScript, Java, C++, C#
 
 ## Exercise
 - Write a program `isValidTime` that checks whether a given string is a valid time according to ISO 8601 / RFC 3339.
